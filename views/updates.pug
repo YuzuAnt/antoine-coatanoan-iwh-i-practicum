@@ -1,0 +1,48 @@
+//- Déclare le doctype HTML5
+doctype html
+
+//- Balise racine HTML
+html
+    //- Section head : métadonnées et liens vers les styles
+    head
+        //- Titre de la page affiché dans l'onglet du navigateur
+        title= title
+
+        //- Lien vers la feuille de style CSS dans public/css/
+        link(rel='stylesheet', href='/css/style.css')
+
+    //- Corps de la page
+    body
+
+        //- Titre principal du formulaire
+        h1 Créer un nouveau robot
+
+        //- Lien de retour vers la liste des robots
+        a(href='/') Retour à la liste
+
+        //- Formulaire HTML qui envoie les données en POST vers /update-cobj
+        form(action='/update-cobj', method='POST')
+
+            //- Champ Nom (propriété name — obligatoire)
+            div
+                //- Label associé au champ name
+                label(for='name') Nom
+                //- Champ texte pour le nom du robot (required = obligatoire)
+                input(type='text', id='name', name='name', required)
+
+            //- Champ Bio (propriété bio)
+            div
+                //- Label associé au champ bio
+                label(for='bio') Bio
+                //- Champ texte pour la bio du robot
+                input(type='text', id='bio', name='bio')
+
+            //- Champ Modèle (propriété modele)
+            div
+                //- Label associé au champ modele
+                label(for='modele') Modèle
+                //- Champ texte pour le modèle du robot
+                input(type='text', id='modele', name='modele')
+
+            //- Bouton de soumission du formulaire
+            button(type='submit') Créer le robot
