@@ -61,5 +61,11 @@ app.get('/', async (req, res) => {
     }
 });
 
+// Route GET /update-cobj : affiche le formulaire de création d'un nouveau robot
+app.get('/update-cobj', (req, res) => {
+    // Rend la vue updates.pug (formulaire vide, prêt à être rempli)
+    res.render('updates', { title: 'Créer un robot' });
+});
+
 // Démarre le serveur sur le port 3000 et affiche un message dans la console
 app.listen(PORT, () => console.log(`Listening on http://localhost:${PORT}`));
