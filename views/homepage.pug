@@ -1,0 +1,45 @@
+//- Déclare le doctype HTML5
+doctype html
+
+//- Balise racine HTML
+html
+    //- Section head : métadonnées et liens vers les styles
+    head
+        //- Titre de la page affiché dans l'onglet du navigateur (variable passée par Express)
+        title= title
+
+        //- Lien vers la feuille de style CSS dans public/css/
+        link(rel='stylesheet', href='/css/style.css')
+
+    //- Corps de la page
+    body
+
+        //- Titre principal de la page
+        h1 Robots
+
+        //- Lien vers le formulaire de création d'un nouveau robot
+        a(href='/update-cobj') Créer un nouveau robot
+
+        //- Tableau HTML pour afficher la liste des robots
+        table
+            //- Ligne d'en-tête du tableau
+            thead
+                tr
+                    //- Colonne Nom
+                    th Nom
+                    //- Colonne Bio
+                    th Bio
+                    //- Colonne Modèle
+                    th Modèle
+
+            //- Corps du tableau : une ligne par robot
+            tbody
+                //- Boucle Pug sur le tableau robots passé depuis Express
+                each robot in robots
+                    tr
+                        //- Affiche la propriété name du robot (robot.properties.name)
+                        td= robot.properties.name
+                        //- Affiche la propriété bio du robot
+                        td= robot.properties.bio
+                        //- Affiche la propriété modele du robot
+                        td= robot.properties.modele
