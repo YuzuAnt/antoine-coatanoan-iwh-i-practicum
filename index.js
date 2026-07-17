@@ -67,5 +67,38 @@ app.get('/update-cobj', (req, res) => {
     res.render('updates', { title: 'Créer un robot' });
 });
 
+// Route POST /update-cobj : reçoit les données du formulaire et crée un robot dans HubSpot
+app.post('/update-cobj', async (req, res) => {
+    try {
+        // Extrait les trois champs envoyés par le formulaire HTML
+        const { name, bio, modele } = req.body;
+
+        // Envoie une requête POST à l'API HubSpot pour créer un nouvel enregistrement
+        await axios.post(
+            HUBSPOT_API_BASE,
+            {
+                // Objet properties : contient les valeurs des propriétés du robot
+                properties: { name, bio, modele }
+            },
+            {
+                // Header Authorization pour s'authentifier + Content-Type JSON
+                headers: {
+                    Authorization: `Bearer ${PRIVATE_APP_TOKEN}`,
+                    'Content-Type': 'application/json'
+                }
+            }
+        );
+
+        // Redirige vers la page d'accueil une fois le robot créé
+        res.redirect('/');
+
+    } catch (error) {
+        // Affiche l'erreur dans la console pour le débogage
+        console.error(error);
+        // Retourne une erreur HTTP 500 au navigateur
+        res.status(500).send('Erreur lors de la création du robot');
+    }
+});
+
 // Démarre le serveur sur le port 3000 et affiche un message dans la console
 app.listen(PORT, () => console.log(`Listening on http://localhost:${PORT}`));
