@@ -33,5 +33,33 @@ app.use(express.static('public'));
 
 // Construit l'URL de base pour l'API HubSpot CRM v3 du custom object Robots
 const HUBSPOT_API_BASE = `https://api.hubapi.com/crm/v3/objects/${CUSTOM_OBJECT_TYPE}`;
+
+// Route GET / : récupère tous les robots et affiche la page d'accueil
+app.get('/', async (req, res) => {
+    try {
+        // Appelle l'API HubSpot pour récupérer tous les enregistrements Robots
+        // avec leurs trois propriétés : name, bio et modele
+        const response = await axios.get(
+            `${HUBSPOT_API_BASE}?properties=name,bio,modele`,
+            {
+                // Envoie le token dans le header Authorization pour s'authentifier
+                headers: { Authorization: `Bearer ${PRIVATE_APP_TOKEN}` }
+            }
+        );
+
+        // Extrait la liste des enregistrements depuis la réponse de l'API
+        const robots = response.data.results;
+
+        // Rend la vue homepage.pug en lui transmettant la liste des robots
+        res.render('homepage', { title: 'Robots', robots });
+
+    } catch (error) {
+        // Affiche l'erreur dans la console pour le débogage
+        console.error(error);
+        // Retourne une erreur HTTP 500 au navigateur
+        res.status(500).send('Erreur lors de la récupération des robots');
+    }
+});
+
 // Démarre le serveur sur le port 3000 et affiche un message dans la console
 app.listen(PORT, () => console.log(`Listening on http://localhost:${PORT}`));
